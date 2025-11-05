@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize single product viewer controls if present
     initSingleProductControls();
+
+    // Prevent form submission when interacting with 3D viewer
+    preventFormSubmission();
 });
 
 /**
@@ -86,7 +89,10 @@ function initSingleProductControls() {
     if (rotateToggle) {
         let isRotating = singleViewer.hasAttribute('auto-rotate');
 
-        rotateToggle.addEventListener('click', function() {
+        rotateToggle.addEventListener('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+
             isRotating = !isRotating;
 
             if (isRotating) {
@@ -107,7 +113,10 @@ function initSingleProductControls() {
     // Reset camera button
     const resetCamera = document.getElementById('reset-camera');
     if (resetCamera) {
-        resetCamera.addEventListener('click', function() {
+        resetCamera.addEventListener('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+
             // Reset camera to default orbit
             singleViewer.cameraOrbit = '45deg 55deg 2.5m';
             singleViewer.fieldOfView = 'auto';
@@ -206,6 +215,65 @@ if ('IntersectionObserver' in window) {
 }
 
 /**
+ * Prevent form submission when interacting with 3D viewer
+ * This is crucial when the viewer is inside a product form
+ */
+function preventFormSubmission() {
+    // Get all viewer wrappers
+    const viewerWrappers = document.querySelectorAll('.product3d-viewer-wrapper, .product3d-single-viewer');
+
+    viewerWrappers.forEach(function(wrapper) {
+        // Prevent clicks on the wrapper from bubbling to parent forms
+        wrapper.addEventListener('click', function(event) {
+            // Stop propagation to prevent form submission
+            event.stopPropagation();
+        });
+
+        // Prevent mousedown events from bubbling
+        wrapper.addEventListener('mousedown', function(event) {
+            event.stopPropagation();
+        });
+
+        // Prevent touch events from bubbling (for mobile)
+        wrapper.addEventListener('touchstart', function(event) {
+            event.stopPropagation();
+        }, { passive: true });
+
+        // Find all buttons inside the wrapper
+        const buttons = wrapper.querySelectorAll('button, .ar-button, .control-button');
+        buttons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+            });
+        });
+
+        // Find all model-viewer elements and prevent their interactions from submitting forms
+        const modelViewers = wrapper.querySelectorAll('model-viewer');
+        modelViewers.forEach(function(viewer) {
+            // Prevent all interaction events from bubbling
+            ['click', 'mousedown', 'mouseup', 'touchstart', 'touchend'].forEach(function(eventType) {
+                viewer.addEventListener(eventType, function(event) {
+                    event.stopPropagation();
+                }, { passive: true });
+            });
+        });
+    });
+
+    // Also handle AR button specifically
+    const arButtons = document.querySelectorAll('.ar-button');
+    arButtons.forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            // AR functionality will still work because model-viewer handles it internally
+        });
+    });
+
+    console.log('3D Viewer: Form submission prevention initialized');
+}
+
+/**
  * Add analytics tracking for 3D viewer interactions (optional)
  */
 function track3DInteraction(eventName, modelName) {
@@ -227,5 +295,6 @@ window.Product3DViewer = {
     init: initModelViewers,
     initControls: initSingleProductControls,
     showError: showErrorMessage,
-    trackInteraction: track3DInteraction
+    trackInteraction: track3DInteraction,
+    preventFormSubmission: preventFormSubmission
 };
