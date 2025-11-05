@@ -16,17 +16,16 @@
         </div>
 
         <div class="product3d-gallery">
-            {* Example Product 1 - Chair *}
+            {* Example Product 1 *}
             <div class="product3d-item">
                 <div class="product3d-viewer-wrapper">
                     <model-viewer
-                        src="{$module_dir}models/chair.glb"
-                        alt="3D Chair Model"
+                        src="{$module_dir}models/product.glb"
+                        alt="3D Product Model"
                         {if $auto_rotate}auto-rotate{/if}
                         {if $camera_controls}camera-controls{/if}
                         shadow-intensity="1"
                         loading="lazy"
-                        poster="{$module_dir}models/chair-poster.jpg"
                         class="product3d-model">
                         <div class="progress-bar hide" slot="progress-bar">
                             <div class="update-bar"></div>
@@ -34,22 +33,21 @@
                     </model-viewer>
                 </div>
                 <div class="product3d-info">
-                    <h3>Modern Chair</h3>
-                    <p>Explore this beautiful modern chair in 3D</p>
+                    <h3>Product Model</h3>
+                    <p>Explore this product in 3D</p>
                 </div>
             </div>
 
-            {* Example Product 2 - Lamp *}
+            {* Example Product 2 *}
             <div class="product3d-item">
                 <div class="product3d-viewer-wrapper">
                     <model-viewer
-                        src="{$module_dir}models/lamp.glb"
-                        alt="3D Lamp Model"
+                        src="{$module_dir}models/product.glb"
+                        alt="3D Product Model"
                         {if $auto_rotate}auto-rotate{/if}
                         {if $camera_controls}camera-controls{/if}
                         shadow-intensity="1"
                         loading="lazy"
-                        poster="{$module_dir}models/lamp-poster.jpg"
                         class="product3d-model">
                         <div class="progress-bar hide" slot="progress-bar">
                             <div class="update-bar"></div>
@@ -57,22 +55,21 @@
                     </model-viewer>
                 </div>
                 <div class="product3d-info">
-                    <h3>Designer Lamp</h3>
-                    <p>View this elegant lamp from every angle</p>
+                    <h3>Product Model</h3>
+                    <p>View this product from every angle</p>
                 </div>
             </div>
 
-            {* Example Product 3 - Sofa *}
+            {* Example Product 3 *}
             <div class="product3d-item">
                 <div class="product3d-viewer-wrapper">
                     <model-viewer
-                        src="{$module_dir}models/sofa.glb"
-                        alt="3D Sofa Model"
+                        src="{$module_dir}models/product.glb"
+                        alt="3D Product Model"
                         {if $auto_rotate}auto-rotate{/if}
                         {if $camera_controls}camera-controls{/if}
                         shadow-intensity="1"
                         loading="lazy"
-                        poster="{$module_dir}models/sofa-poster.jpg"
                         class="product3d-model">
                         <div class="progress-bar hide" slot="progress-bar">
                             <div class="update-bar"></div>
@@ -80,8 +77,8 @@
                     </model-viewer>
                 </div>
                 <div class="product3d-info">
-                    <h3>Comfort Sofa</h3>
-                    <p>Interact with this comfortable sofa in 3D</p>
+                    <h3>Product Model</h3>
+                    <p>Interact with this product in 3D</p>
                 </div>
             </div>
         </div>
